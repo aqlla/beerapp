@@ -1,0 +1,26 @@
+{
+  "name": "beerapp",
+  "version": "1.0.0",
+  "description": "Beer Menuing",
+  "main": "index.js",
+  "scripts": {
+    "test": "run-test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aquilleph/beerapp.git"
+  },
+  "author": "acsherrock@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aquilleph/beerapp/issues"
+  },
+  "homepage": "https://github.com/aquilleph/beerapp#readme",
+  "devDependencies": {
+    "typescript": "^3.3.1"
+  },
+  "dependencies": {
+    "@types/pg": "^7.4.11",
+    "pg": "^7.8.0"
+  }
+}
