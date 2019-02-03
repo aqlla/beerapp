@@ -3,8 +3,8 @@
     "module": "commonjs",
     "target": "es2016",
     "sourceMap": true,
-    "outDir": "dist",
-    "baseUrl": ".",
+    "outDir": "../server/dist",
+    "baseUrl": "..",
     "paths": {
       "*": [
         "node_modules/*"
@@ -12,6 +12,6 @@
     }
   },
   "include": [
-    "src/**/*"
+    "server/src/**/*"
   ]
 }

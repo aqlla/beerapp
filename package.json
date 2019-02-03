@@ -2,10 +2,12 @@
   "name": "beerapp",
   "version": "1.0.0",
   "description": "Beer Menuing",
-  "main": "dist/index.js",
+  "main": "server/dist/index.js",
   "scripts": {
-    "prebuild": "tslint -c  tslint.json -p tsconfig.json --fix",
-    "build": "tsc",
+    "prebuild-server": "tslint -c  tslint.json -p server/tsconfig.json --fix",
+    "prebuild": "npm run prebuild-server",
+    "build-server": "tsc server/src/index.ts",
+    "build": "npm run build-server",
     "prestart": "npm run build",
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"

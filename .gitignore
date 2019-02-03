@@ -2,10 +2,11 @@
 ### Angular ###
 ## Angular ##
 # compiled output
-/dist
+/dist/*
+/server/dist/*
+/client/dist/*
+
 /tmp
-/app/**/*.js
-/app/**/*.js.map
 
 # dependencies
 /node_modules
