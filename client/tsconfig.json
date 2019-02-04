@@ -2,16 +2,18 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es2016",
+    "noImplicitAny": true,
     "sourceMap": true,
-    "outDir": "../server/dist",
-    "baseUrl": "..",
+    "outDir": "./dist/",
+    "baseUrl": ".",
+    "jsx": "react",
     "paths": {
       "*": [
-        "node_modules/*"
+        "../node_modules/*"
       ]
     }
   },
   "include": [
-    "server/src/**/*"
+    "./src/**/*"
   ]
 }
