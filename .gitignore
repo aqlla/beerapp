@@ -4,7 +4,7 @@
 # compiled output
 /dist/*
 /server/dist/*
-/client/dist/*
+#/client/dist/*
 
 /tmp
 
