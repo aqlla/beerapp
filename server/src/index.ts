@@ -27,11 +27,40 @@ app.get("/api/beer", async (req, res) => {
     }
 });
 
+app.get("/api/s/:val", async (req, res) => {
+    try {
+        const searchStr = req.params.val;
+        const fs = {
+            string: [
+                "be.name", "be.style", "br.name", "br.city", "br.state"
+            ],
+            number: [
+                "ibu"
+            ]
+        };
+        const query = `select ${fs.number.concat(fs.string)} from beers be left join breweries br on br.id = be.brewery_id where `
+            + isNaN(searchStr)
+                ? fs.string.reduce((acc, f) => acc ? `${acc} or ` : `` + `${f} ilike '%${searchStr}%`)
+                : fs.number.reduce((acc, f) => acc ? `${acc} or ` : `` + `${f} = ${searchStr}`);
+        console.log(query);
+
+        const data = await pg.query(query);
+
+        if ("rows" in data) {
+            res.send(data.rows);
+        } else {
+            res.send(`there was a problem.`);
+        }
+    } catch (e) {
+        res.send(e);
+        console.log(e);
+    }
+});
+
 app.get("/api/beer/:field/:val", async (req, res) => {
     const fields = [ "style", "brewery" ];
     if (fields.includes(req.params.field)) {
         try {
-            await pg.connect();
             let query = `select * from beers where ${req.params.field} ILIKE '%${req.params.val.toLowerCase()}%'`;
             console.log(query);
             if (req.params.field === "brewery") {
@@ -41,15 +70,21 @@ app.get("/api/beer/:field/:val", async (req, res) => {
             if ("rows" in data) {
                 res.send(data.rows);
             }
-            await pg.end();
+            // await pg.end();
         } catch (e) {
             res.send(e);
-            console.log(e);
+            console.error(e);
         }
     } else  {
         res.send(`${req.params.field} is not a valid search field`);
     }
 });
 
-app.listen(port, (_) =>
-    console.log(`server started at http://localhost:${port}`));
+app.listen(port, async (_) => {
+    try {
+        await pg.connect();
+        console.log(`server started at http://localhost:${port}`);
+    } catch (e) {
+        console.error(e);
+    }
+});
