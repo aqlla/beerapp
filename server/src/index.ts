@@ -10,7 +10,7 @@ app.get("/api", (req, res) =>
     res.send("hi"));
 
 app.get("/api/beer", (req, res) =>
-    res.send("beers");
+    res.send("beers"));
 
 // start the express server
 app.listen(port, () => {
