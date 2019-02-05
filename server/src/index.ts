@@ -40,8 +40,8 @@ app.get("/api/s/:val", async (req, res) => {
                 "be.ibu", "be.abv"
             ]
         };
-        let query = `select be.sizes, be.abv, be.ibu, be.name, be.style, br.name as brewery_name, br.city, br.state from beers be left join breweries br on br.id = be.brewery_id where `;
-        query += isNaN(searchStr)
+        const query = `select be.sizes, be.abv, be.ibu, be.name, be.style, br.name as brewery_name, br.city, br.state from beers be left join breweries br on br.id = be.brewery_id where ` +
+            isNaN(searchStr)
                 ? fs.string.reduce((acc, f) => (acc ? `${acc} or ` : ``) + `${f} ilike '%${searchStr}%'`, "")
                 : fs.number.reduce((acc, f) => (acc ? `${acc} or ` : ``) + `${f} = ${searchStr}`, "");
         console.log(query);
@@ -60,7 +60,7 @@ app.get("/api/s/:val", async (req, res) => {
 });
 
 app.get("/api/beer/:field/:val", async (req, res) => {
-    const fields = [ "style", "brewery" ];
+    const fields = [ "name", "style", "brewery", "city", "state" ];
     if (fields.includes(req.params.field)) {
         try {
             let query = `select * from beers where ${req.params.field} ILIKE '%${req.params.val.toLowerCase()}%'`;
