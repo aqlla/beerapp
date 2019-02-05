@@ -30,6 +30,8 @@ app.get("/api/beer", async (req, res) => {
 app.get("/api/s/:val", async (req, res) => {
     try {
         const searchStr = req.params.val;
+        console.log(searchStr);
+
         const fs = {
             string: [
                 "be.name", "be.style", "br.name", "br.city", "br.state"
@@ -38,8 +40,9 @@ app.get("/api/s/:val", async (req, res) => {
                 "ibu"
             ]
         };
-        const query = `select ${fs.number.concat(fs.string)} from beers be left join breweries br on br.id = be.brewery_id where `
-            + isNaN(searchStr)
+        let query = `select ${fs.number.concat(fs.string)} from beers be left join breweries br on br.id = be.brewery_id where `;
+        console.log(query);
+        query += isNaN(searchStr)
                 ? fs.string.reduce((acc, f) => acc ? `${acc} or ` : `` + `${f} ilike '%${searchStr}%`)
                 : fs.number.reduce((acc, f) => acc ? `${acc} or ` : `` + `${f} = ${searchStr}`);
         console.log(query);
