@@ -40,7 +40,7 @@ app.get("/api/s/:val", async (req, res) => {
                 "ibu"
             ]
         };
-        let query = `select ${fs.number.concat(fs.string)} from beers be left join breweries br on br.id = be.brewery_id where `;
+        let query = `select be.ibu, be.name, be.style, br.name as brewery_name, br.city, br.state from beers be left join breweries br on br.id = be.brewery_id where `;
         query += isNaN(searchStr)
                 ? fs.string.reduce((acc, f) => (acc ? `${acc} or ` : ``) + `${f} ilike '%${searchStr}%'`, "")
                 : fs.number.reduce((acc, f) => (acc ? `${acc} or ` : ``) + `${f} = ${searchStr}`, "");
