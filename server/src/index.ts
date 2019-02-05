@@ -37,7 +37,7 @@ app.get("/api/s/:val", async (req, res) => {
                 "be.name", "be.style", "br.name", "br.city", "br.state"
             ],
             number: [
-                "ibu"
+                "be.ibu", "be.abv"
             ]
         };
         let query = `select be.ibu, be.name, be.style, br.name as brewery_name, br.city, br.state from beers be left join breweries br on br.id = be.brewery_id where `;
