@@ -1,10 +1,18 @@
 import * as express from "express";
+import * as path from "path";
 const app = express();
 const port = 8080; // default port to listen
 
-app.get("/api", (req, res) => {
-    // render the index template
-    res.send("hi");
+
+
+app.get("/", (req, res) =>
+    res.sendFile(path.join(__dirname + '../../client/index.html')));
+
+app.get("/api", (req, res) =>
+    res.send("hi"));
+
+app.get('/api/beer', (req, res) => {
+
 });
 
 // start the express server
