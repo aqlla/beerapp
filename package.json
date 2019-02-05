@@ -4,6 +4,7 @@
   "description": "Beer Menuing",
   "main": "server/dist/index.js",
   "scripts": {
+    "postinstall": "npm run start",
     "build-client": "webpack --config ./client/webpack.config.js",
     "prebuild": "tslint -c ./tslint.json -p ./server/tsconfig.json --fix",
     "build": "tsc -p ./server/tsconfig.json",
