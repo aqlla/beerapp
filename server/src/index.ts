@@ -2,7 +2,7 @@ import * as express from "express";
 const app = express();
 const port = 8080; // default port to listen
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
     // render the index template
     res.send("hi");
 });
