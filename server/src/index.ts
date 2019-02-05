@@ -32,9 +32,10 @@ app.get("/api/beer/:field/:val", async (req, res) => {
     if (fields.includes(req.params.field)) {
         try {
             await pg.connect();
-            let query = `select * from beers where lower(${req.params.field}) like '%${req.params.val.toLowerCase()}%'`;
+            let query = `select * from beers where ${req.params.field} ILIKE '%${req.params.val.toLowerCase()}%'`;
+            console.log(query);
             if (req.params.field === "brewery") {
-                query = `select * from beers be left join breweries br on br.id = be.brewery_id where br.name like '%${req.params.val.toLowerCase()}%'`;
+                query = `select * from beers be left join breweries br on br.id = be.brewery_id where br.name ILIKE '%${req.params.val.toLowerCase()}%'`;
             }
             const data = await pg.query(query);
             if ("rows" in data) {
