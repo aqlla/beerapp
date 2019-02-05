@@ -29,14 +29,13 @@ app.get("/api/beer", async (req, res) => {
 
 app.get("/api/beer/:field/:val", async (req, res) => {
     const fields = [ "style", "brewery" ];
-    if (req.params.field in fields) {
+    if (fields.includes(req.params.field)) {
         try {
             await pg.connect();
             const query = `select * from beers where ${req.params.field}=${req.params.val}`;
             const data = await pg.query(query);
-            if ("rows" in data) {
+            if ("rows" in data)
                 res.send(data.rows);
-            }
             await pg.end();
         } catch (e) {
             res.send(e);
