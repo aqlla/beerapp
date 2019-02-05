@@ -20,6 +20,7 @@ app.get("/api", (req, res) =>
 app.get("/api/beer", async (req, res) => {
     await pg.connect();
     res.send(await pg.query('select * from beers'));
+    await pg.end();
 });
 
 app.listen(port, (_) =>
