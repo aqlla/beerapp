@@ -40,10 +40,10 @@ app.get("/api/s/:val", async (req, res) => {
                 "ibu"
             ]
         };
-        const query = `select ${fs.number.concat(fs.string)} from beers be left join breweries br on br.id = be.brewery_id where `
-            + isNaN(searchStr)
-                ? fs.string.reduce((acc, f) => (acc ? `${acc} or ` : ``) + `${f} ilike '%${searchStr}%'`, '')
-                : fs.number.reduce((acc, f) => (acc ? `${acc} or ` : ``) + `${f} = ${searchStr}`, '');
+        let query = `select ${fs.number.concat(fs.string)} from beers be left join breweries br on br.id = be.brewery_id where `;
+        query += isNaN(searchStr)
+                ? fs.string.reduce((acc, f) => (acc ? `${acc} or ` : ``) + `${f} ilike '%${searchStr}%'`, "")
+                : fs.number.reduce((acc, f) => (acc ? `${acc} or ` : ``) + `${f} = ${searchStr}`, "");
         console.log(query);
 
         const data = await pg.query(query);
