@@ -5,12 +5,17 @@ export interface ISearchSuggestionsOptions {
 }
 
 const SearchSuggestions = (options: ISearchSuggestionsOptions) => {
-    if (options && options.results && options.results.hasOwnProperty("map") && typeof options.results.map === "function") {
+    console.log(options);
+    if (options && options.results) { //&& options.results.hasOwnProperty("map") && typeof options.results.map === "function") {
         const suggestions = options.results.map(r => (
             <li key={r.id}>
                 {r.name}
             </li>
         ));
+
+        for (let r of options.results) {
+
+        }
         console.log(suggestions);
         return <ul>{suggestions}</ul>
     } else {
