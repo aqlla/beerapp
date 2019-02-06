@@ -159,7 +159,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(/*! react */ "react");
 const SearchSuggestions = (options) => {
     const classname = options.classname || 'search-suggestions';
-    if (options && options.results && options.results.data) {
+    if (options && options.results && options.results.data && options.results.data.map) {
         const suggestions = options.results.data.map(r => (React.createElement("div", { key: r.id, className: `${classname}-item` },
             React.createElement("header", { className: `${classname}-item-body` }, r.name),
             React.createElement("div", { className: `${classname}-item-body` },

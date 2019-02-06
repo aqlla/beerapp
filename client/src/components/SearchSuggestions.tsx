@@ -9,7 +9,7 @@ export interface ISearchSuggestionsOptions {
 
 const SearchSuggestions = (options: ISearchSuggestionsOptions) => {
     const classname = options.classname || 'search-suggestions';
-    if (options && options.results && options.results.data) {
+    if (options && options.results && options.results.data && options.results.data.map) {
         const suggestions = options.results.data.map(r => (
             <div key={r.id} className={`${classname}-item`}>
                 <header className={`${classname}-item-body`}>
