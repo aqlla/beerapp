@@ -41,11 +41,13 @@ class Search extends Component {
 
     onInputChange = () => {
         this.setState({ query: this.searchElement.value },async () => {
+            console.log('state: ');
             console.log(this.state);
             if (this.state.query && this.state.query.length > 1 && this.state.query.length % 2 === 0) {
-                this.setState({
-                    results: await Search.get(`api/s/${this.state.query}`)
-                });
+                console.log('results: ');
+                const results = await Search.get(`api/s/${this.state.query}`);
+                console.log(results);
+                this.setState({ results });
             }
         })
     };

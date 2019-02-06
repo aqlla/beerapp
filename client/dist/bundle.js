@@ -117,11 +117,13 @@ class Search extends react_1.Component {
         };
         this.onInputChange = () => {
             this.setState({ query: this.searchElement.value }, () => __awaiter(this, void 0, void 0, function* () {
+                console.log('state: ');
                 console.log(this.state);
                 if (this.state.query && this.state.query.length > 1 && this.state.query.length % 2 === 0) {
-                    this.setState({
-                        results: yield Search.get(`api/s/${this.state.query}`)
-                    });
+                    console.log('results: ');
+                    const results = yield Search.get(`api/s/${this.state.query}`);
+                    console.log(results);
+                    this.setState({ results });
                 }
             }));
         };
@@ -159,8 +161,9 @@ exports.default = Search;
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(/*! react */ "react");
 const SearchSuggestions = (options) => {
+    console.log('results (Search.state.results): ');
     console.log(options);
-    if (options && options.results && options.results.hasOwnProperty("map") && typeof options.results.map === "function") {
+    if (options && options.results && options.results && typeof options.results.map === "function") {
         const suggestions = options.results.map(r => (React.createElement("li", { key: r.id }, r.name)));
         console.log(suggestions);
         return React.createElement("ul", null, suggestions);
