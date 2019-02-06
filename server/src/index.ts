@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as path from "path";
 import { Client } from "pg";
-//import ISqlColumn from "../../models/ISqlColumn";
+// import ISqlColumn from "../../models/ISqlColumn";
 
 const pg = new Client({
     database: "beer",
