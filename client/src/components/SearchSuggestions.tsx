@@ -5,7 +5,7 @@ export interface ISearchSuggestionsOptions {
 }
 
 const SearchSuggestions = (options: ISearchSuggestionsOptions) => {
-    if (options && options.results && 'map'in options.results) {
+    if (options && options.results) {
         const suggestions = options.results.map(r => (
             <li key={r.id}>
                 {r.name}

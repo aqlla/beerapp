@@ -159,7 +159,7 @@ exports.default = Search;
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(/*! react */ "react");
 const SearchSuggestions = (options) => {
-    if (options && options.results && 'map' in options.results) {
+    if (options && options.results) {
         const suggestions = options.results.map(r => (React.createElement("li", { key: r.id }, r.name)));
         return React.createElement("ul", null, suggestions);
     }
