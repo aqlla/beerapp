@@ -4,10 +4,6 @@ import axios, { AxiosResponse, AxiosPromise } from "axios";
 import SearchSuggestions from "./SearchSuggestions";
 import IBeerData from "../../../models/IBeerData";
 
-
-
-
-
 export interface ISearchOptions {}
 
 export interface ISearchState<T = any> {
@@ -32,11 +28,10 @@ class Search extends Component {
 
     onInputChange = () => {
         this.setState({ query: this.searchElement.value },async () => {
-            if (this.state.query && this.state.query.length > 1 && this.state.query.length % 2 === 0) {
-                console.log('results: ');
-                const results = await Search.get(`api/s/${this.state.query}`);
-                console.log(results);
-                this.setState({ results });
+            if (this.state.query && this.state.query.length > 1) {
+                this.setState({
+                    results: await Search.get(`api/s/${this.state.query}?max=20`)
+                });
             }
         })
     };

@@ -33,13 +33,13 @@ app.get("/api/beer", async (req, res) => {
 
 app.get("/api/s/:val", async (req, res) => {
     try {
+        const maxResults: number = req.query.max || 50;
         const searchStr = req.params.val;
-        const query = `SELECT beers.id, beers.sizes, beers.abv, beers.ibu, beers.name, beers.style, beers.brewery_id, breweries.name AS brewery_name, breweries.city, breweries.state FROM beers LEFT JOIN breweries ON breweries.id = beers.brewery_id WHERE `
+        const query = `SELECT TOP ${maxResults} beers.id, beers.sizes, beers.abv, beers.ibu, beers.name, beers.style, beers.brewery_id, breweries.name AS brewery_name, breweries.city, breweries.state FROM beers LEFT JOIN breweries ON breweries.id = beers.brewery_id WHERE `
             + (isNaN(searchStr)
                 ? fs.string.reduce((acc, f) => (acc ? `${acc} or ` : ``) + `${f} ilike '%${searchStr}%'`, "")
                 : fs.number.reduce((acc, f) => (acc ? `${acc} or ` : ``) + `${f} = ${searchStr}`, ""));
         console.log(query);
-
         const data = await pg.query(query);
 
         if ("rows" in data) {

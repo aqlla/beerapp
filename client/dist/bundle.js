@@ -117,11 +117,10 @@ class Search extends react_1.Component {
         };
         this.onInputChange = () => {
             this.setState({ query: this.searchElement.value }, () => __awaiter(this, void 0, void 0, function* () {
-                if (this.state.query && this.state.query.length > 1 && this.state.query.length % 2 === 0) {
-                    console.log('results: ');
-                    const results = yield Search.get(`api/s/${this.state.query}`);
-                    console.log(results);
-                    this.setState({ results });
+                if (this.state.query && this.state.query.length > 1) {
+                    this.setState({
+                        results: yield Search.get(`api/s/${this.state.query}?max=20`)
+                    });
                 }
             }));
         };
@@ -159,12 +158,15 @@ exports.default = Search;
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(/*! react */ "react");
 const SearchSuggestions = (options) => {
-    console.log('results (Search.state.results): ');
-    console.log(options);
+    const classname = options.classname || 'search-suggestions';
     if (options && options.results && options.results.data) {
-        const suggestions = options.results.data.map(r => (React.createElement("li", { key: r.id }, r.name)));
-        console.log(suggestions);
-        return React.createElement("ul", null, suggestions);
+        const suggestions = options.results.data.map(r => (React.createElement("div", { key: r.id, className: `${classname}-item` },
+            React.createElement("header", { className: `${classname}-item-body` }, r.name),
+            React.createElement("div", { className: `${classname}-item-body` },
+                r.breweryName,
+                " - ",
+                r.style))));
+        return React.createElement("div", { className: classname }, suggestions);
     }
     else {
         return React.createElement("span", null, options.toString());

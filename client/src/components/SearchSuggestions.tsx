@@ -4,19 +4,23 @@ import IBeerData from "../../../models/IBeerData";
 
 export interface ISearchSuggestionsOptions {
     results: AxiosResponse<IBeerData[]>;
+    classname?: string;
 }
 
 const SearchSuggestions = (options: ISearchSuggestionsOptions) => {
-    console.log('results (Search.state.results): ');
-    console.log(options);
+    const classname = options.classname || 'search-suggestions';
     if (options && options.results && options.results.data) {
         const suggestions = options.results.data.map(r => (
-            <li key={r.id}>
-                {r.name}
-            </li>
+            <div key={r.id} className={`${classname}-item`}>
+                <header className={`${classname}-item-body`}>
+                    {r.name}
+                </header>
+                <div className={`${classname}-item-body`}>
+                    {r.breweryName} - {r.style}
+                </div>
+            </div>
         ));
-        console.log(suggestions);
-        return <ul>{suggestions}</ul>
+        return <div className={classname}>{suggestions}</div>
     } else {
         return <span>{options.toString()}</span>;
     }
