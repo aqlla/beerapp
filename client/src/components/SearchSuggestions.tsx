@@ -1,14 +1,16 @@
 import * as React from 'react'
+import {AxiosResponse} from "axios";
+import IBeerData from "../../../models/IBeerData";
 
 export interface ISearchSuggestionsOptions {
-    results: any[];
+    results: AxiosResponse<IBeerData[]>;
 }
 
 const SearchSuggestions = (options: ISearchSuggestionsOptions) => {
     console.log('results (Search.state.results): ');
     console.log(options);
-    if (options && options.results && options.results && typeof options.results.map === "function") {
-        const suggestions = options.results.map(r => (
+    if (options && options.results && options.results.data) {
+        const suggestions = options.results.data.map(r => (
             <li key={r.id}>
                 {r.name}
             </li>
