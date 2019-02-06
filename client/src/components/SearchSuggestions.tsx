@@ -8,6 +8,8 @@ const SearchSuggestions = (options: ISearchSuggestionsOptions) => {
     if (options && options.results && 'map'in options.results) {
         const suggestions = options.results.map(r => <li key={r.id}>{r.name}</li>);
         return <ul>{suggestions}</ul>
+    } else {
+        return null;
     }
 };
 

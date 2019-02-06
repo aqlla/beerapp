@@ -33,7 +33,7 @@ class Search extends Component {
 
     private static async get(endpoint: any): Promise<any> {
         try {
-            return await axios.get(`https://aquil.la/${endpoint}`);
+            return await axios.get(`https://beer.aquil.la/${endpoint}`);
         } catch(e)  {
             console.error(e);
         }

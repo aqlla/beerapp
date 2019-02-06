@@ -129,7 +129,7 @@ class Search extends react_1.Component {
     static get(endpoint) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                return yield axios_1.default.get(`https://aquil.la/${endpoint}`);
+                return yield axios_1.default.get(`https://beer.aquil.la/${endpoint}`);
             }
             catch (e) {
                 console.error(e);
@@ -164,6 +164,9 @@ const SearchSuggestions = (options) => {
     if (options && options.results && 'map' in options.results) {
         const suggestions = options.results.map(r => React.createElement("li", { key: r.id }, r.name));
         return React.createElement("ul", null, suggestions);
+    }
+    else {
+        return null;
     }
 };
 exports.default = SearchSuggestions;
