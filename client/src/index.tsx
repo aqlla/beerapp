@@ -1,9 +1,6 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
 
-import { Hello } from "./components/Hello";
+import Search from "./components/Search";
 
-ReactDom.render(
-    <Hello compiler="Typescript" framework="React"/>,
-    document.getElementById("main")
-);
+ReactDom.render(<Search/>, document.getElementById("main"));
