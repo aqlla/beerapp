@@ -15,7 +15,7 @@ const SearchSuggestions = (options: ISearchSuggestionsOptions) => {
         console.log(suggestions);
         return <ul>{suggestions}</ul>
     } else {
-        return <span>{options}</span>;
+        return <span>{options.toString()}</span>;
     }
 };
 

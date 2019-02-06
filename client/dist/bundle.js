@@ -166,7 +166,7 @@ const SearchSuggestions = (options) => {
         return React.createElement("ul", null, suggestions);
     }
     else {
-        return React.createElement("span", null, options);
+        return React.createElement("span", null, options.toString());
     }
 };
 exports.default = SearchSuggestions;
