@@ -39,8 +39,6 @@ class Search extends Component {
         }
     }
 
-
-
     onInputChange = () => {
         this.setState({ query: this.searchElement.value },async () => {
             console.log(this.state);

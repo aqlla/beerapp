@@ -4,13 +4,11 @@ export interface ISearchSuggestionsOptions {
     results: any[];
 }
 
-const SearchSuggestions = (props: ISearchSuggestionsOptions) => {
-    const options = props.results.map(r => (
-        <li key={r.id}>
-            {r.name}
-        </li>
-    ));
-    return <ul>{options}</ul>
+const SearchSuggestions = (options: ISearchSuggestionsOptions) => {
+    if (options && options.results && 'map'in options.results) {
+        const suggestions = options.results.map(r => <li key={r.id}>{r.name}</li>);
+        return <ul>{suggestions}</ul>
+    }
 };
 
 export default SearchSuggestions
