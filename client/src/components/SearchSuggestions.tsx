@@ -11,6 +11,7 @@ const SearchSuggestions = (options: ISearchSuggestionsOptions) => {
                 {r.name}
             </li>
         ));
+        console.log(suggestions);
         return <ul>{suggestions}</ul>
     } else {
         return null;

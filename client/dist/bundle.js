@@ -161,6 +161,7 @@ const React = __webpack_require__(/*! react */ "react");
 const SearchSuggestions = (options) => {
     if (options && options.results && options.results.hasOwnProperty("map") && typeof options.results.map === "function") {
         const suggestions = options.results.map(r => (React.createElement("li", { key: r.id }, r.name)));
+        console.log(suggestions);
         return React.createElement("ul", null, suggestions);
     }
     else {
