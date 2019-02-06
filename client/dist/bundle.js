@@ -160,15 +160,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(/*! react */ "react");
 const SearchSuggestions = (options) => {
     console.log(options);
-    if (options && options.results) { //&& options.results.hasOwnProperty("map") && typeof options.results.map === "function") {
+    if (options && options.results && options.results.hasOwnProperty("map") && typeof options.results.map === "function") {
         const suggestions = options.results.map(r => (React.createElement("li", { key: r.id }, r.name)));
-        for (let r of options.results) {
-        }
         console.log(suggestions);
         return React.createElement("ul", null, suggestions);
     }
     else {
-        return null;
+        return React.createElement("span", null, options);
     }
 };
 exports.default = SearchSuggestions;
