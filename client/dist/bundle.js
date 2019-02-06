@@ -138,10 +138,8 @@ class Search extends react_1.Component {
     }
     render() {
         return (React.createElement("form", null,
-            React.createElement("label", null,
-                React.createElement("input", { placeholder: "Search", ref: input => this.searchElement = input, onChange: this.onInputChange }),
-                React.createElement(SearchSuggestions_1.default, { results: this.state.results })),
-            React.createElement("input", { type: "submit", value: "Submit" })));
+            React.createElement("input", { placeholder: "Search", ref: input => this.searchElement = input, onChange: this.onInputChange }),
+            React.createElement(SearchSuggestions_1.default, { results: this.state.results })));
     }
 }
 exports.default = Search;

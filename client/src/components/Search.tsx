@@ -25,11 +25,11 @@ export interface ISearchState {
 }
 
 class Search extends Component {
+    private searchElement: HTMLInputElement;
     public state: ISearchState = {
         query: '',
         results: []
     };
-    private searchElement: HTMLInputElement;
 
     private static async get(endpoint: any): Promise<any> {
         try {
@@ -42,7 +42,7 @@ class Search extends Component {
     onInputChange = () => {
         this.setState({ query: this.searchElement.value },async () => {
             console.log(this.state);
-            if (this.state.query && this.state.query.length > 1 && this.state.query.length % 2 ===0) {
+            if (this.state.query && this.state.query.length > 1 && this.state.query.length % 2 === 0) {
                 this.setState({
                     results: await Search.get(`api/s/${this.state.query}`)
                 });
@@ -53,15 +53,12 @@ class Search extends Component {
     render() {
         return (
             <form>
-                <label>
-                    <input
-                        placeholder="Search"
-                        ref={input => this.searchElement = input}
-                        onChange={this.onInputChange}
-                    />
-                    <SearchSuggestions results={this.state.results}/>
-                </label>
-                <input type="submit" value="Submit" />
+                <input
+                    placeholder="Search"
+                    ref={input => this.searchElement = input}
+                    onChange={this.onInputChange}
+                />
+                <SearchSuggestions results={this.state.results}/>
             </form>
         )
     }
