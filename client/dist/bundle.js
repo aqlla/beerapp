@@ -118,9 +118,8 @@ class Search extends react_1.Component {
         this.onInputChange = () => {
             this.setState({ query: this.searchElement.value }, () => __awaiter(this, void 0, void 0, function* () {
                 if (this.state.query && this.state.query.length > 1) {
-                    this.setState({
-                        results: yield Search.get(`api/s/${this.state.query}?max=20`)
-                    });
+                    const results = yield Search.get(`api/s/${this.state.query}?limit=${this.props.suggestionLimit}`);
+                    this.setState({ results });
                 }
             }));
         };
@@ -128,7 +127,13 @@ class Search extends react_1.Component {
     static get(endpoint) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                return yield axios_1.default.get(`https://beer.aquil.la/${endpoint}`);
+                const res = yield axios_1.default.get(`https://beer.aquil.la/${endpoint}`);
+                if (res.data) {
+                    return res.data;
+                }
+                else {
+                    return [];
+                }
             }
             catch (e) {
                 console.error(e);
@@ -138,7 +143,7 @@ class Search extends react_1.Component {
     render() {
         return (React.createElement("form", null,
             React.createElement("input", { placeholder: "Search", ref: input => this.searchElement = input, onChange: this.onInputChange }),
-            React.createElement(SearchSuggestions_1.default, { results: this.state.results })));
+            React.createElement(SearchSuggestions_1.default, { data: this.state.results })));
     }
 }
 exports.default = Search;
@@ -157,11 +162,11 @@ exports.default = Search;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(/*! react */ "react");
-const SearchSuggestions = (options) => {
-    const classname = options.classname || 'search-suggestions';
-    if (options && options.results && options.results.data && options.results.data.map) {
-        const suggestions = options.results.data.map(r => (React.createElement("div", { key: r.id, className: `${classname}-item` },
-            React.createElement("header", { className: `${classname}-item-body` }, r.name),
+const SearchSuggestions = (props) => {
+    const classname = props.classname || 'search-suggestions';
+    if (props.data) {
+        const suggestions = props.data.map(r => (React.createElement("div", { key: r.id, className: `${classname}-item` },
+            React.createElement("header", { className: `${classname}-item-header` }, r.name),
             React.createElement("div", { className: `${classname}-item-body` },
                 r.breweryName,
                 " - ",
@@ -169,7 +174,7 @@ const SearchSuggestions = (options) => {
         return React.createElement("div", { className: classname }, suggestions);
     }
     else {
-        return React.createElement("span", null, options.toString());
+        return null;
     }
 };
 exports.default = SearchSuggestions;
@@ -190,7 +195,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(/*! react */ "react");
 const ReactDom = __webpack_require__(/*! react-dom */ "react-dom");
 const Search_1 = __webpack_require__(/*! ./components/Search */ "./client/src/components/Search.tsx");
-ReactDom.render(React.createElement(Search_1.default, null), document.getElementById("main"));
+ReactDom.render(React.createElement(Search_1.default, { suggestionLimit: 35 }), document.getElementById("main"));
 
 
 /***/ }),

@@ -1,26 +1,36 @@
 import * as React from 'react';
 import { Component } from 'react';
-import axios, { AxiosResponse, AxiosPromise } from "axios";
+import axios from "axios";
 import SearchSuggestions from "./SearchSuggestions";
 import IBeerData from "../../../models/IBeerData";
 
-export interface ISearchOptions {}
+export interface ISearchOptions {
+    suggestionLimit: number;
+}
 
 export interface ISearchState<T = any> {
     query: string;
     results: T;
 }
 
-class Search extends Component {
+type SearchState<T> = Readonly<ISearchState<T>>
+type SearchOptions = Readonly<ISearchOptions>
+
+class Search extends Component<SearchOptions, SearchState<IBeerData[]>> {
     private searchElement: HTMLInputElement;
-    public state: ISearchState<AxiosResponse<IBeerData[]>> = {
+    public readonly state: SearchState<IBeerData[]> = {
         query: '',
         results: null
     };
 
-    private static async get(endpoint: string): Promise<AxiosResponse<IBeerData[]>> {
+    private static async get(endpoint: string): Promise<IBeerData[]> {
         try {
-            return await axios.get(`https://beer.aquil.la/${endpoint}`);
+            const res = await axios.get(`https://beer.aquil.la/${endpoint}`);
+            if (res.data) {
+                return res.data;
+            } else {
+                return [];
+            }
         } catch(e)  {
             console.error(e);
         }
@@ -29,9 +39,8 @@ class Search extends Component {
     onInputChange = () => {
         this.setState({ query: this.searchElement.value },async () => {
             if (this.state.query && this.state.query.length > 1) {
-                this.setState({
-                    results: await Search.get(`api/s/${this.state.query}?max=20`)
-                });
+                const results = await Search.get(`api/s/${this.state.query}?limit=${this.props.suggestionLimit}`);
+                this.setState({ results });
             }
         })
     };
@@ -44,7 +53,7 @@ class Search extends Component {
                     ref={input => this.searchElement = input}
                     onChange={this.onInputChange}
                 />
-                <SearchSuggestions results={this.state.results}/>
+                <SearchSuggestions data={this.state.results}/>
             </form>
         )
     }

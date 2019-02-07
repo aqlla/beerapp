@@ -1,18 +1,17 @@
 import * as React from 'react'
-import {AxiosResponse} from "axios";
 import IBeerData from "../../../models/IBeerData";
 
 export interface ISearchSuggestionsOptions {
-    results: AxiosResponse<IBeerData[]>;
+    data: IBeerData[];
     classname?: string;
 }
 
-const SearchSuggestions = (options: ISearchSuggestionsOptions) => {
-    const classname = options.classname || 'search-suggestions';
-    if (options && options.results && options.results.data && options.results.data.map) {
-        const suggestions = options.results.data.map(r => (
+const SearchSuggestions = (props: ISearchSuggestionsOptions) => {
+    const classname = props.classname || 'search-suggestions';
+    if (props.data) {
+        const suggestions = props.data.map(r => (
             <div key={r.id} className={`${classname}-item`}>
-                <header className={`${classname}-item-body`}>
+                <header className={`${classname}-item-header`}>
                     {r.name}
                 </header>
                 <div className={`${classname}-item-body`}>
@@ -22,7 +21,7 @@ const SearchSuggestions = (options: ISearchSuggestionsOptions) => {
         ));
         return <div className={classname}>{suggestions}</div>
     } else {
-        return <span>{options.toString()}</span>;
+        return null;
     }
 };
 

@@ -1,12 +1,18 @@
 import * as express from "express";
 import * as path from "path";
 import { Client } from "pg";
+import * as env from 'dotenv';
+import * as proc from 'process';
 // import ISqlColumn from "../../models/ISqlColumn";
 
+env.config();
+
 const pg = new Client({
-    database: "beer",
-    user: "acs"
+    host: proc.env.DB_HOST,
+    database: proc.env.DB_NAME,
+    user: proc.env.DB_USER
 });
+
 const app = express();
 const port = 8080;
 const fs = {
@@ -15,9 +21,7 @@ const fs = {
 };
 
 app.get("/", (req, res) =>
-    res.sendFile(path.join(__dirname + "../../client/index.html")));
-
-app.get("/api", (req, res) => res.send("hi"));
+    res.render(path.join(__dirname + "../../client/index.html")));
 
 app.get("/api/beer", async (req, res) => {
     try {
@@ -41,7 +45,7 @@ app.get("/api/s/:val", async (req, res) => {
             + (isNaN(searchStr)
                 ? fs.string.reduce((acc, f) => (acc ? `${acc} or ` : ``) + `${f} ilike '%${searchStr}%'`, "")
                 : fs.number.reduce((acc, f) => (acc ? `${acc} or ` : ``) + `${f} = ${searchStr}`, ""))
-            + ` ORDER BY beers.name DESC `
+            + ` ORDER BY beers.name ASC `
             + ` LIMIT ${maxResults}`;
         console.log(query);
         const data = await pg.query(query);
@@ -70,7 +74,6 @@ app.get("/api/beer/:field/:val", async (req, res) => {
             if ("rows" in data) {
                 res.send(data.rows);
             }
-            // await pg.end();
         } catch (e) {
             res.send(e);
             console.error(e);

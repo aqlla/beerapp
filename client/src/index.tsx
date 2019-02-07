@@ -3,4 +3,4 @@ import * as ReactDom from "react-dom";
 
 import Search from "./components/Search";
 
-ReactDom.render(<Search/>, document.getElementById("main"));
+ReactDom.render(<Search suggestionLimit={35}/>, document.getElementById("main"));
