@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Component } from 'react';
 import axios from "axios";
 import SearchSuggestions from "./SearchSuggestions";
-import IBeerData from "../../../models/IBeerData";
+import IBeerData from "../../../../models/IBeerData";
+
 
 export interface ISearchOptions {
     suggestionLimit: number;

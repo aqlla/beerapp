@@ -1,5 +1,5 @@
 import * as React from 'react'
-import IBeerData from "../../../models/IBeerData";
+import IBeerData from "../../../../models/IBeerData";
 
 export interface ISearchSuggestionsOptions {
     data: IBeerData[];
