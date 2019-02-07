@@ -4,7 +4,6 @@ import axios from "axios";
 import SearchSuggestions from "./SearchSuggestions";
 import IBeerData from "../../../../models/IBeerData";
 
-
 export interface ISearchOptions {
     suggestionLimit: number;
 }

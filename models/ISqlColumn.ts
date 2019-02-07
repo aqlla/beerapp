@@ -1,4 +1,7 @@
-export default interface ISqlColumn<T> {
+
+export default interface ISqlColumn {
+    alias?: string;
     name: string;
-    apiName: string;
+    table: string;
+    type: "number" | "string" | "date";
 }

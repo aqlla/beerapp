@@ -1,8 +1,10 @@
+import * as env from "dotenv";
 import * as express from "express";
 import * as path from "path";
 import { Client } from "pg";
-import * as env from 'dotenv';
-import * as proc from 'process';
+import * as proc from "process";
+import {number} from "prop-types";
+import ISqlColumn from "../../models/ISqlColumn";
 // import ISqlColumn from "../../models/ISqlColumn";
 
 env.config();
@@ -15,10 +17,44 @@ const pg = new Client({
 
 const app = express();
 const port = 8080;
-const fs = {
-    string: [ "beers.name", "beers.style", "breweries.name", "breweries.city", "breweries.state" ],
-    number: [ "beers.ibu", "beers.abv" ]
-};
+const fs: ISqlColumn[] = [
+    {
+        table: "beers",
+        name: "name",
+        type: "string"
+    },
+    {
+        table: "beers",
+        name: "style",
+        type: "string"
+    },
+    {
+        table: "breweries",
+        name: "name",
+        alias: "brewery_name",
+        type: "string"
+    },
+    {
+        table: "breweries",
+        name: "city",
+        type: "string"
+    },
+    {
+        table: "breweries",
+        name: "state",
+        type: "string"
+    },
+    {
+        table: "beers",
+        name: "ibu",
+        type: "number"
+    },
+    {
+        table: "beers",
+        name: "abv",
+        type: "number"
+    }
+];
 
 app.get("/", (req, res) =>
     res.render(path.join(__dirname + "../../client/index.html")));
@@ -37,14 +73,15 @@ app.get("/api/beer", async (req, res) => {
 
 app.get("/api/s/:val", async (req, res) => {
     try {
-        const maxResults: number = req.query.max || 50;
-        const searchStr = req.params.val;
-        const query = `SELECT beers.id, beers.sizes, beers.abv, beers.ibu, beers.name, beers.style, beers.brewery_id,`
-            + `breweries.name AS brewery_name, breweries.city, breweries.state `
-            + `FROM beers LEFT JOIN breweries ON breweries.id = beers.brewery_id WHERE `
-            + (isNaN(searchStr)
-                ? fs.string.reduce((acc, f) => (acc ? `${acc} or ` : ``) + `${f} ilike '%${searchStr}%'`, "")
-                : fs.number.reduce((acc, f) => (acc ? `${acc} or ` : ``) + `${f} = ${searchStr}`, ""))
+        const maxResults: number = req.query.max || 250;
+        const searchStr: number | string  = req.params.val;
+        const select = fs.map((f) => `${f.table}.${f.name} ${f.alias ? `AS ${f.alias} ` : ``}`);
+        const query = `SELECT ${select} FROM beers LEFT JOIN breweries ON breweries.id = beers.brewery_id WHERE `
+            + (Number(searchStr)
+                ? fs.filter((f) => f.type = "number")
+                    .reduce((acc, f) => (acc ? `${acc} or ` : ``) + `${f.table}.${f.name} ilike '%${searchStr}%'`, "")
+                : fs.filter((f) => f.type = "string")
+                    .reduce((acc, f) => (acc ? `${acc} or ` : ``) + `${f.table}.${f.name} = ${searchStr}`, ""))
             + ` ORDER BY beers.name ASC `
             + ` LIMIT ${maxResults}`;
         console.log(query);
@@ -62,13 +99,15 @@ app.get("/api/s/:val", async (req, res) => {
 });
 
 app.get("/api/beer/:field/:val", async (req, res) => {
-    const field = req.params.field;
-    if (fs.string.includes(field)) {
+    const field = fs.find((f) => f.name = req.params.field);
+
+    if (field) {
         try {
             const val = req.params.val.toLowerCase();
-            const query = `SELECT beers.id, beers.sizes, beers.abv, beers.ibu, beers.name, beers.style, beers.brewery_id, breweries.name AS brewery_name, breweries.city, breweries.state FROM beers LEFT JOIN breweries ON breweries.id = beers.brewery_id WHERE ${field} ILIKE '%${val}%'`;
-            console.log(query);
-
+            const operator = field.type === "string" ? "ILIKE" : "=";
+            const select = fs.map((f) => `${f.table}.${f.name} ${f.alias ? `AS ${f.alias} ` : ``}`);
+            const where = `${field.table}.${field.name} ${operator} '%${val}%'`;
+            const query = `SELECT ${select} FROM beers LEFT JOIN breweries ON breweries.id = beers.brewery_id WHERE ${where}`;
             const data = await pg.query(query);
 
             if ("rows" in data) {

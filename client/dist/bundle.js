@@ -86,10 +86,10 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./client/src/components/Search.tsx":
-/*!******************************************!*\
-  !*** ./client/src/components/Search.tsx ***!
-  \******************************************/
+/***/ "./client/src/components/Search/Search.tsx":
+/*!*************************************************!*\
+  !*** ./client/src/components/Search/Search.tsx ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -107,7 +107,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(/*! react */ "react");
 const react_1 = __webpack_require__(/*! react */ "react");
 const axios_1 = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-const SearchSuggestions_1 = __webpack_require__(/*! ./SearchSuggestions */ "./client/src/components/SearchSuggestions.tsx");
+const SearchSuggestions_1 = __webpack_require__(/*! ./SearchSuggestions */ "./client/src/components/Search/SearchSuggestions.tsx");
 class Search extends react_1.Component {
     constructor() {
         super(...arguments);
@@ -151,10 +151,10 @@ exports.default = Search;
 
 /***/ }),
 
-/***/ "./client/src/components/SearchSuggestions.tsx":
-/*!*****************************************************!*\
-  !*** ./client/src/components/SearchSuggestions.tsx ***!
-  \*****************************************************/
+/***/ "./client/src/components/Search/SearchSuggestions.tsx":
+/*!************************************************************!*\
+  !*** ./client/src/components/Search/SearchSuggestions.tsx ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -194,7 +194,7 @@ exports.default = SearchSuggestions;
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(/*! react */ "react");
 const ReactDom = __webpack_require__(/*! react-dom */ "react-dom");
-const Search_1 = __webpack_require__(/*! ./components/Search */ "./client/src/components/Search.tsx");
+const Search_1 = __webpack_require__(/*! ./components/Search/Search */ "./client/src/components/Search/Search.tsx");
 ReactDom.render(React.createElement(Search_1.default, { suggestionLimit: 35 }), document.getElementById("main"));
 
 
