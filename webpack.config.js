@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    entry: "./client/src/index.tsx",
+    entry: "./src/index.tsx",
     output: {
         //publicPath: "dist",
         path: path.resolve(__dirname, 'dist'),
@@ -21,7 +21,7 @@ module.exports = {
                 test: /\.tsx?$/,
                 loader: "awesome-typescript-loader",
                 options: {
-                    configFileName: "./client/tsconfig.json",
+                    configFileName: "./tsconfig.json",
                 }
             },
             {

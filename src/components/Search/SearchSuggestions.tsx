@@ -1,5 +1,5 @@
-import * as React from 'react'
-import IBeerData from "../../../../models/IBeerData";
+import * as React from "react";
+import IBeerData from "../../models/IBeerData";
 
 export interface ISearchSuggestionsOptions {
     data: IBeerData[];
@@ -7,9 +7,9 @@ export interface ISearchSuggestionsOptions {
 }
 
 const SearchSuggestions = (props: ISearchSuggestionsOptions) => {
-    const classname = props.classname || 'search-suggestions';
+    const classname = props.classname || "search-suggestions";
     if (props.data) {
-        const suggestions = props.data.map(r => (
+        const suggestions = props.data.map((r) => (
             <div key={r.id} className={`${classname}-item`}>
                 <header className={`${classname}-item-header`}>
                     {r.name}
@@ -19,10 +19,10 @@ const SearchSuggestions = (props: ISearchSuggestionsOptions) => {
                 </div>
             </div>
         ));
-        return <div className={classname}>{suggestions}</div>
+        return <div className={classname}>{suggestions}</div>;
     } else {
         return null;
     }
 };
 
-export default SearchSuggestions
+export default SearchSuggestions;
