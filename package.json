@@ -4,7 +4,7 @@
   "description": "Promotes Craft Beer with social drinking and marketing for Microbreweries.",
   "main": "/dist/index.js",
   "scripts": {
-    "postinstall": "npm run build-client",
+    "postinstall": "npm run build",
     "prebuild": "tslint -c ./tslint.json -p ./tsconfig.json --fix",
     "build": "webpack --config ./webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"

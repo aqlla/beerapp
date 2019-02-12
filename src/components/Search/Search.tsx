@@ -22,7 +22,7 @@ class Search extends Component<SearchOptions, SearchState<IBeerData[]>> {
         try {
             const res = await axios.request({
                 method: "GET",
-                url: `https://beer.aquil.la/${endpoint}`
+                url: `http://localhost:8080/${endpoint}`
             });
             if (res.data) {
                 return res.data;
@@ -46,7 +46,7 @@ class Search extends Component<SearchOptions, SearchState<IBeerData[]>> {
                 this.setState({ results });
             }
         });
-    };
+    }
 
     public render() {
         return (
